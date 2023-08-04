@@ -3,7 +3,7 @@
 const aboutController = {
   getAbout: async (req, res, next) => {
     try {
-      await res.render('../views/about')
+      await res.render('../views/about/about')
     } catch {
 
     }
