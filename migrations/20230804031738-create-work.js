@@ -22,7 +22,7 @@ module.exports = {
       pic: {
         type: Sequelize.STRING
       },
-      AdminId: {
+      UserId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
