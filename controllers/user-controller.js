@@ -1,6 +1,5 @@
 const { User } = require('../models')
 const bcrypt = require('bcryptjs')
-const db = require('../models')
 
 const userController = {
   getSignUp: async (req, res, next) => {
@@ -26,23 +25,33 @@ const userController = {
         avatar: 'https://i.imgur.com/NUfWDow.png'
       })
       req.flash('success_messages', '成功註冊帳號！')
-      res.redirect('/login')
+      res.redirect('/user/login')
     } catch (err) {
       next(err)
     }
   },
   getLogin: async (req, res, next) => {
     try {
-      await res.render('../views/user/login')
-    } catch {
-
+      res.render('../views/user/login')
+    } catch (err) {
+      next(err)
     }
   },
-  postLogout: async (req, res, next) => {
+  postLogin: async (req, res, next) => {
     try {
-
-    } catch {
-
+      req.flash('success_messages', '成功登入！')
+      res.redirect('/blog') // 等到有首頁再改成導向首頁,不然會因為先導到首頁再導到blog而讓訊息消失
+    } catch (err) {
+      next(err)
+    }
+  },
+  logout: async (req, res, next) => {
+    try {
+      req.logout()
+      req.flash('success_messages', '登出成功！')
+      res.redirect('/blog') // 等到有首頁再改成導向首頁,不然會因為先導到首頁再導到blog而讓訊息消失
+    } catch (err) {
+      next(err)
     }
   }
 }
