@@ -11,7 +11,7 @@ const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
-const { getUser } = require('./helpers/auth-helper')
+const { getUser } = require('./helpers/auth-helpers')
 
 app.engine('hbs', hbs.engine({ extname: '.hbs', defaultLayout: 'main', helpers: handlebarsHelpers }))
 app.set('view engine', '.hbs')
