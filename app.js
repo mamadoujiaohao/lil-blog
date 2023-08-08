@@ -12,6 +12,7 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
 const { getUser } = require('./helpers/auth-helpers')
+const methodOverride = require('method-override') // for RESTful API
 
 app.engine('hbs', hbs.engine({ extname: '.hbs', defaultLayout: 'main', helpers: handlebarsHelpers }))
 app.set('view engine', '.hbs')
@@ -21,6 +22,7 @@ app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUniniti
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
+app.use(methodOverride('_method'))
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
