@@ -2,21 +2,5 @@
   <div class="mb-4 text-center">
     <h1 class="h3 font-weight-normal mb-3">Add New Work</h1>
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="title">Title</label>
-    <input class="form-control" type="text" name="title" id="title" placeholder="Enter title" required>
-  </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="text">Text</label>
-    <input class="form-control" type="text" name="text" id="text" placeholder="Write description here">
-  </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="href">href</label>
-    <input class="form-control" type="text" name="href" id="href" placeholder="Enter href">
-  </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="pic">Pic</label>
-    <input class="form-control" type="text" name="pic" id="pic" placeholder="Enter pic href here(temporary)">
-  </div>
-  <button type="submit" class="btn btn-secondary">Submit</button>
+  {{> work-form}}
 </form>

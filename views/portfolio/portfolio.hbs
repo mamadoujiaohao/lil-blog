@@ -22,7 +22,7 @@
             <form action="/portfolio/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
               <button type="submit" class="btn btn-outline-danger" onclick="return confirm(`Sure you want to delete {{ this.title}}？`)">Delete</button>
             </form>
-            <a class="btn btn-secondary m-1 btn-sm" role="button" aria-disabled="true">Edit</a>
+            <a href="/portfolio/{{this.id}}/edit" class="btn btn-secondary m-1 btn-sm" role="button" aria-disabled="true">Edit</a>
           {{/if}}
           <button class="btn btn-secondary m-1 btn-sm" role="button" aria-disabled="true" data-bs-toggle="modal" data-bs-target="#show{{this.id}}">More</button>
         </div>

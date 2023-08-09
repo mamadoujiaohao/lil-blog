@@ -40,9 +40,38 @@ const portfolioController = {
   deleteWork: async (req, res, next) => {
     try {
       const work = await Work.findByPk(req.params.id)
-      if (!work) throw new Error("Restaurant didn't exist!")
+      if (!work) throw new Error("Work didn't exist!")
       await work.destroy()
       req.flash('success_messages', 'Work deleted successfully')
+      res.redirect('/portfolio')
+    } catch (err) {
+      next(err)
+    }
+  },
+  editWork: async (req, res, next) => {
+    try {
+      const work = await Work.findByPk(req.params.id,
+        { raw: true }
+      )
+      if (!work) throw new Error("Work didn't exist!")
+      res.render('../views/portfolio/edit-work', { work })
+    } catch (err) {
+      next(err)
+    }
+  },
+  putWork: async (req, res, next) => {
+    try {
+      const { title, text, href, pic } = req.body
+      if (!title) throw new Error('Please enter title')
+      const work = await Work.findByPk(req.params.id)
+      if (!work) throw new Error("Work didn't exist!")
+      await work.update({
+        title,
+        text,
+        href,
+        pic
+      })
+      req.flash('success_messages', 'Work edited successfully')
       res.redirect('/portfolio')
     } catch (err) {
       next(err)
