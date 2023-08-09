@@ -3,7 +3,10 @@ const { getUser } = require('../helpers/auth-helpers')
 const portfolioController = {
   getPortfolio: async (req, res, next) => {
     try {
-      const works = await Work.findAll()
+      const works = await Work.findAll({
+        raw: true,
+        order: [['updatedAt', 'DESC']]
+      })
       await res.render('../views/portfolio/portfolio', { work: works })
     } catch (err) {
       next(err)
@@ -36,9 +39,9 @@ const portfolioController = {
   },
   deleteWork: async (req, res, next) => {
     try {
-      console.log(req.params)
-      // const work = await Work.findByPk(req.params.id)
-      // await work.destroy()
+      const work = await Work.findByPk(req.params.id)
+      if (!work) throw new Error("Restaurant didn't exist!")
+      await work.destroy()
       req.flash('success_messages', 'Work deleted successfully')
       res.redirect('/portfolio')
     } catch (err) {
