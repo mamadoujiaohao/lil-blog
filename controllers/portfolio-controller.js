@@ -1,5 +1,7 @@
 const { Work } = require('../models')
 const { getUser } = require('../helpers/auth-helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
+
 const portfolioController = {
   getPortfolio: async (req, res, next) => {
     try {
@@ -21,14 +23,16 @@ const portfolioController = {
   },
   postWork: async (req, res, next) => {
     try {
-      const { title, text, href, pic } = req.body
+      const { title, text, href } = req.body
       const UserId = getUser(req).id
+      const pic = req.file
       if (!title) throw new Error('Please enter title')
+      const imgurFile = pic ? await imgurFileHandler(pic) : null
       await Work.create({
         title,
         text,
         href,
-        pic,
+        pic: imgurFile,
         UserId
       })
       req.flash('success_messages', 'New work created successfully')
@@ -61,15 +65,19 @@ const portfolioController = {
   },
   putWork: async (req, res, next) => {
     try {
-      const { title, text, href, pic } = req.body
+      const { title, text, href } = req.body
+      const pic = req.file // 圖片檔的位置在req.file裡, 可以console.log(req)去找 (找好久)
+      console.log(pic)
       if (!title) throw new Error('Please enter title')
+      const imgurFile = pic ? await imgurFileHandler(pic) : null
+      console.log(imgurFile)
       const work = await Work.findByPk(req.params.id)
       if (!work) throw new Error("Work didn't exist!")
       await work.update({
         title,
         text: text.trim(),
         href,
-        pic
+        pic: imgurFile || work.pic
       })
       req.flash('success_messages', 'Work edited successfully')
       res.redirect('/portfolio')
