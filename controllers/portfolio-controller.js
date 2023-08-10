@@ -54,7 +54,7 @@ const portfolioController = {
         { raw: true }
       )
       if (!work) throw new Error("Work didn't exist!")
-      res.render('../views/portfolio/edit-work', { work })
+      res.render('../views/portfolio/edit-work', { work }) // 目前拿出來的work.text, 內容如果有換行的話, 出現在textarea的 default value 會在行前自動多加2格, 不知道怎麼處理
     } catch (err) {
       next(err)
     }
@@ -67,7 +67,7 @@ const portfolioController = {
       if (!work) throw new Error("Work didn't exist!")
       await work.update({
         title,
-        text,
+        text: text.trim(),
         href,
         pic
       })

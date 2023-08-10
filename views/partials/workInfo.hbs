@@ -1,14 +1,17 @@
-<div class="modal fade" id="show{{this.id}}" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade " id="show{{this.id}}" tabindex="-1" aria-hidden="true" role="dialog" >
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="{{this.id}}">{{this.title}}</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>{{this.text}}</p>
+          <pre class=" fs-5" style="white-space: pre-line; ">{{this.text}}</pre>
+      </div>
+       <div class="modal-footer">
         <a class="btn btn-secondary" href="{{this.href}}" target="_blank">Visit Website <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       </div>
     </div>
   </div>
 </div>
+

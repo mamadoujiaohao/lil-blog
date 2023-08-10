@@ -17,6 +17,7 @@ const methodOverride = require('method-override') // for RESTful API
 app.engine('hbs', hbs.engine({ extname: '.hbs', defaultLayout: 'main', helpers: handlebarsHelpers }))
 app.set('view engine', '.hbs')
 app.set('views', './views')
+app.use(express.static('public'))
 app.use(express.urlencoded({ extened: true }))
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
