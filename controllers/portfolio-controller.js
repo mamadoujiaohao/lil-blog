@@ -9,7 +9,7 @@ const portfolioController = {
         raw: true,
         order: [['updatedAt', 'DESC']]
       })
-      await res.render('../views/portfolio/portfolio', { work: works })
+      res.render('../views/portfolio/portfolio', { work: works })
     } catch (err) {
       next(err)
     }

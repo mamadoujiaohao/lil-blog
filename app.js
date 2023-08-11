@@ -5,8 +5,9 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
-const routes = require('./routes')
 const hbs = require('express-handlebars')
+const routes = require('./routes')
+
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const flash = require('connect-flash')
 const session = require('express-session')
@@ -17,6 +18,7 @@ const methodOverride = require('method-override') // for RESTful API
 app.engine('hbs', hbs.engine({ extname: '.hbs', defaultLayout: 'main', helpers: handlebarsHelpers }))
 app.set('view engine', '.hbs')
 app.set('views', './views')
+app.use(express.static('public'))
 app.use(express.urlencoded({ extened: true }))
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
