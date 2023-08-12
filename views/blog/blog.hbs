@@ -6,15 +6,13 @@
       </button>
     </div>
   {{/if}}
-  </div>
   {{#each article}}
-    <div class=" article card mb-3" style="max-width: 600px;">
+    <div class=" article card mx-3" style="max-width: 600px;">
       <div class="row g-0">
-        <div class="">
-          <div class="card-body">
+          <div class="card-body " >
             <h3 class="card-title">{{this.title}}</h3>
             <p class="card-text"><small class="text-muted"> {{this.updatedAt}} __by {{ this.userName}}<span class="badge rounded-pill bg-primary ms-3"> {{this.tag}}</span> </small></p>
-            <p class="card-text">{{this.text}}</p>
+            <p class="blog card-text" >{{this.text}}</p>
             <div class="card-body d-flex justify-content-end p-0 mb-2 mx-2">
               {{#if ../user.isAdmin}}
                 <form action="/blog/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">

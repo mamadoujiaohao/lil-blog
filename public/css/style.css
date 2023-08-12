@@ -18,6 +18,12 @@ body{
     background: linear-gradient(to bottom, #ffffff, #d8f3ff );
 }
 
-.article.card.mb-3{
+.article.card{
     background: linear-gradient(to right, #d8f3ff , #ffffff );
 }
+
+.blog.card-text{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
