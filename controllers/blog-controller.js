@@ -69,48 +69,70 @@ const blogController = {
   },
   postArticle: async (req, res, next) => {
     try {
-      // const { title, text, tag } = req.body
-      // const UserId = getUser(req).id
-      // const pic = req.file
-      // if (!title) throw new Error('Please enter title')
-      // const imgurFile = pic ? await imgurFileHandler(pic) : null
-      // await Article.create({
-      //   title,
-      //   text,
-      //   pic: imgurFile,
-      //   UserId
-      // })
-      // console.log(666)
-      // await Tag.findOrCreate({ where: {name: tag}})
-      // console.log(777)
+      let { title, text, tag } = req.body
+      const UserId = getUser(req).id
+      const pic = req.file
+      if (!title) throw new Error('Please enter title')
+      const imgurFile = pic ? await imgurFileHandler(pic) : null
+      await Article.create({
+        title,
+        text,
+        pic: imgurFile,
+        UserId
+      })
+      console.log(666)
+      await Tag.findOrCreate({ where: {name: tag}})
+      console.log(777)
 
-      // // 建立article與tag的關聯(articleTag)
-      // const articleInDB = await Article.findOne({
-      //   raw: true,
-      //   where: {
-      //     title: title
-      //   },
-      //   order:[['createdAt', 'DESC']]
-      // })
+      // 建立article與tag的關聯(articleTag)
+      const articleInDB = await Article.findOne({
+        raw: true,
+        where: {
+          title: title
+        },
+        order:[['createdAt', 'DESC']]
+      })
 
-      // console.log(888)
+      console.log(888)
 
-      // const tagInDB = await Tag.findOne({ 
-      //   raw: true,
-      //   where: {name: tag}
-      // })
-      // console.log(999)
-      // await ArticleTag.Create({
-      //   ArticleId: articleInDB.id,
-      //   TagId: tagInDB.id
-      // })
-      // console.log(000)
+      const tagInDB = await Tag.findOne({ 
+        raw: true,
+        where: {name: tag}
+      })
+      console.log(999)
+      await ArticleTag.create({
+        ArticleId: articleInDB.id,
+        TagId: tagInDB.id
+      })
+      console.log(000)
       req.flash('success_messages', 'New article created successfully')
       res.redirect('/blog')
     } catch (err) {
       next(err)
     }
-  }
+  },
+  editArticle: async (req, res, next) => {
+    try {
+      
+    } catch (err) {
+      next(err)
+    }
+  },
+  deleteArticle: async (req, res, next) => {
+    try {
+      const article = await Article.findByPk(req.params.id)
+      if (!article) throw new Error("Article didn't exist!")
+      const articleTag = await ArticleTag.findOne({
+        where: {ArticleId: req.params.id}
+      })
+      await article.destroy()
+      await articleTag.destroy()
+      req.flash('success_messages', 'Article deleted successfully')
+      res.redirect('/blog')
+    } catch (err) {
+      next(err)
+    }
+  },
 }
 
 module.exports = blogController
