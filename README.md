@@ -10,6 +10,7 @@
 ## Environment Setup 環境建置
 •	Node.js 18.16.0
 •	nodemon
+•	MySQL
 
 ## Install安裝與使用
 1.	確認安裝Node.js和npm之後，將專案 clone 到本地
