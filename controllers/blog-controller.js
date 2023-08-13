@@ -73,6 +73,7 @@ const blogController = {
       const UserId = getUser(req).id
       const pic = req.file
       if (!title) throw new Error('Please enter title')
+      if (!tag) throw new Error('Please enter tag')
       const imgurFile = pic ? await imgurFileHandler(pic) : null
       await Article.create({
         title,
@@ -80,11 +81,7 @@ const blogController = {
         pic: imgurFile,
         UserId
       })
-      console.log(666)
       await Tag.findOrCreate({ where: {name: tag}})
-      console.log(777)
-
-      // 建立article與tag的關聯(articleTag)
       const articleInDB = await Article.findOne({
         raw: true,
         where: {
@@ -92,19 +89,14 @@ const blogController = {
         },
         order:[['createdAt', 'DESC']]
       })
-
-      console.log(888)
-
       const tagInDB = await Tag.findOne({ 
         raw: true,
         where: {name: tag}
       })
-      console.log(999)
       await ArticleTag.create({
         ArticleId: articleInDB.id,
         TagId: tagInDB.id
       })
-      console.log(000)
       req.flash('success_messages', 'New article created successfully')
       res.redirect('/blog')
     } catch (err) {
@@ -113,7 +105,53 @@ const blogController = {
   },
   editArticle: async (req, res, next) => {
     try {
+      const article = await Article.findByPk(req.params.id,
+        { raw: true }
+      )
+      const articleTag = await ArticleTag.findOne({
+        where:{ArticleId: req.params.id}
+      })
+      const tag = await Tag.findByPk(articleTag?.dataValues?.TagId,{raw: true})
+      console.log(articleTag.dataValues)
+      console.log()
+      // 藥用article去找到tag name, 然後回傳到前端!!
+      if (!article) throw new Error("article didn't exist!")
+      res.render('../views/blog/edit-article', { article, tag })
       
+    } catch (err) {
+      next(err)
+    }
+  },
+  putArticle: async (req, res, next) => {
+    try {
+      let { title, text, tag } = req.body
+      const UserId = getUser(req).id
+      const pic = req.file
+      if (!title) throw new Error('Please enter title')
+      if (!tag) throw new Error('Please enter tag')
+      const imgurFile = pic ? await imgurFileHandler(pic) : null
+      const article = await Article.findByPk(req.params.id)
+      await article.update({
+        title,
+        text,
+        pic: imgurFile,
+        UserId
+      })
+      await Tag.findOrCreate({ where: {name: tag}})
+      const tagInDB = await Tag.findOne({ 
+        raw: true,
+        where: {name: tag}
+      })
+      let articleTag = await ArticleTag.findOne({
+        where: {
+          ArticleId: req.params.id
+        },
+      })
+      await articleTag.update({
+        TagId: tagInDB?.id
+      })
+      req.flash('success_messages', 'Article edited successfully')
+      res.redirect('/blog')
     } catch (err) {
       next(err)
     }

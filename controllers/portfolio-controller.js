@@ -67,10 +67,8 @@ const portfolioController = {
     try {
       const { title, text, href } = req.body
       const pic = req.file // 圖片檔的位置在req.file裡, 可以console.log(req)去找 (找好久)
-      console.log(pic)
       if (!title) throw new Error('Please enter title')
       const imgurFile = pic ? await imgurFileHandler(pic) : null
-      console.log(imgurFile)
       const work = await Work.findByPk(req.params.id)
       if (!work) throw new Error("Work didn't exist!")
       await work.update({
