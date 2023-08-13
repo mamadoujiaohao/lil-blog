@@ -42,5 +42,3 @@ App listening on http://localhost:3000
 ```
 9.	若欲暫停使用
 ```
-ctrl + c
-```
