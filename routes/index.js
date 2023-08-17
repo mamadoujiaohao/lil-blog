@@ -12,6 +12,6 @@ router.use('/portfolio', portfolio)
 router.use('/about', about)
 router.use('/blog', blog)
 router.use('/auth', auth)
-router.use('/', (req, res) => res.redirect('/blog')) // 暫時先引導到blog
+router.use('/', (req, res) => res.redirect('/about')) // 暫時先引導到about
 router.use('/', generalErrorHandler)
 module.exports = router
