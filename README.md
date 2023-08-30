@@ -18,7 +18,7 @@
 
 ## Install安裝與使用
 1.	確認安裝Node.js和npm之後，將專案 clone 到本地
-```
+
 2.	透過終端機進入此專案資料夾，安裝所需NPM Packages：
 ```
 npm install
@@ -43,3 +43,4 @@ npm run start
 7.	若看見此行訊息則代表順利運行，打開瀏覽器進入到以下網址
 ```
 App listening on http://localhost:3000
+```
