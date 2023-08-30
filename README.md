@@ -17,30 +17,31 @@
 •	MySQL
 
 ## Install安裝與使用
+```
 1.	確認安裝Node.js和npm之後，將專案 clone 到本地
-
+```
 2.	透過終端機進入此專案資料夾，安裝所需NPM Packages：
-
+```
 npm install
 ```
 3.	在SQL WorkBench 建立資料庫 (在workBench內輸入)：
-
+```
 create database lil-blog
 ```
 4.	建立資料庫Table：
-
+```
 npx sequelize db:migrate
 ```
 5.	在.env檔案中放入密碼(參考.env.example)：
--
+```
 IMGUR_CLIENT_ID= 你的密碼
 JWT_SECRET= 你的密碼
 ```
 6.	啟動伺服器
-
+```
 npm run start
 ```
 7.	若看見此行訊息則代表順利運行，打開瀏覽器進入到以下網址
-
+```
 App listening on http://localhost:3000
 ```
