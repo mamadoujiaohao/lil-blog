@@ -43,4 +43,3 @@ npm run start
 7.	若看見此行訊息則代表順利運行，打開瀏覽器進入到以下網址
 ```
 App listening on http://localhost:3000
-```
