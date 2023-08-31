@@ -12,9 +12,9 @@ const blogController = {
           { model: ArticleTag, include: [{ model: Tag }] }
         ]
       })
-      articles = articles.map(a => a.get({ plain: true}))
-      const dataPath = articles // 要加?確認該參數是否存在,否則會出錯(propertys of undefined)
-      articles = await Promise.all (articles?.map(article => {
+      articles = articles.map(a => a.get({ plain: true }))
+      // const dataPath = articles // 要加?確認該參數是否存在,否則會出錯(propertys of undefined)
+      articles = await Promise.all(articles?.map(article => {
         return {
           id: article.id,
           title: article.title,
@@ -69,7 +69,7 @@ const blogController = {
   },
   postArticle: async (req, res, next) => {
     try {
-      let { title, text, tag } = req.body
+      const { title, text, tag } = req.body
       const UserId = getUser(req).id
       const pic = req.file
       if (!title) throw new Error('Please enter title')
@@ -81,17 +81,17 @@ const blogController = {
         pic: imgurFile,
         UserId
       })
-      await Tag.findOrCreate({ where: {name: tag}})
+      await Tag.findOrCreate({ where: { name: tag } })
       const articleInDB = await Article.findOne({
         raw: true,
         where: {
-          title: title
+          title
         },
-        order:[['createdAt', 'DESC']]
+        order: [['createdAt', 'DESC']]
       })
-      const tagInDB = await Tag.findOne({ 
+      const tagInDB = await Tag.findOne({
         raw: true,
-        where: {name: tag}
+        where: { name: tag }
       })
       await ArticleTag.create({
         ArticleId: articleInDB.id,
@@ -109,22 +109,21 @@ const blogController = {
         { raw: true }
       )
       const articleTag = await ArticleTag.findOne({
-        where:{ArticleId: req.params.id}
+        where: { ArticleId: req.params.id }
       })
-      const tag = await Tag.findByPk(articleTag?.dataValues?.TagId,{raw: true})
+      const tag = await Tag.findByPk(articleTag?.dataValues?.TagId, { raw: true })
       console.log(articleTag.dataValues)
       console.log()
       // 藥用article去找到tag name, 然後回傳到前端!!
       if (!article) throw new Error("article didn't exist!")
       res.render('../views/blog/edit-article', { article, tag })
-      
     } catch (err) {
       next(err)
     }
   },
   putArticle: async (req, res, next) => {
     try {
-      let { title, text, tag } = req.body
+      const { title, text, tag } = req.body
       const UserId = getUser(req).id
       const pic = req.file
       if (!title) throw new Error('Please enter title')
@@ -137,15 +136,15 @@ const blogController = {
         pic: imgurFile,
         UserId
       })
-      await Tag.findOrCreate({ where: {name: tag}})
-      const tagInDB = await Tag.findOne({ 
+      await Tag.findOrCreate({ where: { name: tag } })
+      const tagInDB = await Tag.findOne({
         raw: true,
-        where: {name: tag}
+        where: { name: tag }
       })
-      let articleTag = await ArticleTag.findOne({
+      const articleTag = await ArticleTag.findOne({
         where: {
           ArticleId: req.params.id
-        },
+        }
       })
       await articleTag.update({
         TagId: tagInDB?.id
@@ -161,7 +160,7 @@ const blogController = {
       const article = await Article.findByPk(req.params.id)
       if (!article) throw new Error("Article didn't exist!")
       const articleTag = await ArticleTag.findOne({
-        where: {ArticleId: req.params.id}
+        where: { ArticleId: req.params.id }
       })
       await article.destroy()
       await articleTag.destroy()
@@ -170,7 +169,7 @@ const blogController = {
     } catch (err) {
       next(err)
     }
-  },
+  }
 }
 
 module.exports = blogController
